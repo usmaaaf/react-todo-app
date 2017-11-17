@@ -2,7 +2,7 @@
 
 A simple todo application that allows you to add, delete, and edit your todos.
 
-## ReactJS User Profile
+## ReactJS Todo
 
 
 ```sh
