@@ -30,7 +30,6 @@ class Logins extends Component {
     }
 
     render() {
-        console.log(this.props.user)
         return (
             <div className="Login">
             <p>{this.props.error}</p>

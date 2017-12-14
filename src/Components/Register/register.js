@@ -26,12 +26,9 @@ class Register extends Component {
             email: this.refs.email.value,
             password: this.refs.pass.value
         }, this.props.history)
-
-
     }
 
     render() {
-        console.log(this.props.user)
         return (
             <div className="Login">
             <p>{this.props.error}</p>
@@ -63,14 +60,16 @@ const maptoprops = ({ error, user }) => ({ error,user });
 const actions = store => ({
     register: async(state, props, history) => { 
         const request = await axios.post("https://express-todoapi.herokuapp.com/api/v1/register", props);
+        console.log(request.data)
         if(request.data.success){
             history.push("/App");
             return { 
                 ...state,
                 user: request.data.data
             }
-        } return {...state, error:request.data.error }
-        }
+        } else if(request.data.error)
+        {return {...state, error:"Email already exists" }
+}        }
   });
 
 export let Registers = connect(maptoprops, actions)(Register)
