@@ -1,28 +1,16 @@
 import React, {Component} from 'react';
 
+import { connect } from 'redux-zero/react';
+
 class AddTodo extends Component {
-    constructor() {
-        super();
-        this.state = {
-            newTodo: []
-        }
-    }
 
     handleSubmit(e) {
         e.preventDefault();
-
-        this.setState({
-            newTodo: this.refs.title.value
-        }, function () {
-            //console.log(this.state);
-            this
-                .props
-                .addTodo(this.state.newTodo);
-        });
-        this.refs.title.value = " ";
+        this.props.addTodo(this.refs.title.value);
     }
 
     render() {
+        console.log(this.props.todos);
         return (
             <div >
                 <h3>Add Todo</h3>
@@ -37,5 +25,15 @@ class AddTodo extends Component {
     }
 
 }
+const maptoprops = ({ todos }) => ({ todos });
 
-export default AddTodo;
+const actions = store => ({
+  addTodo: (state, props) => { return { 
+    ...state,
+    todos: state.todos.concat(props)
+}}
+});
+
+
+export default connect(maptoprops, actions)(AddTodo)
+

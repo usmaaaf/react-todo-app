@@ -1,14 +1,8 @@
 import React, {Component} from 'react';
 import TodoItems from './TodoItem';
+import {connect} from 'redux-zero/react';
 
 class Todo extends Component {
-
-  deleteTodo(del) {
-    // console.log(del);
-    this
-      .props
-      .onDelete(del);
-  }
 
   openTodo(modal) {
     this
@@ -17,34 +11,57 @@ class Todo extends Component {
   }
 
   editTodo(edit, indent) {
-    console.log(edit);
     this
       .props
-      .onEdit(edit, indent);
+      .editTodo(edit, indent);
   }
 
   render() {
-    let todoItems;
-    if (this.props.todos) {
-      todoItems = this
-        .props
-        .todos
-        .map((todo, index) => {
-          return (<TodoItems
-            onEdit={(edit) => this.editTodo(edit, index)}
-            onDelete={(del) => this.deleteTodo(del)}
-            id={index}
-            key={todo}
-            todo={todo}/>);
-        });
-    }
+    console.log(this.props.todos);
     return (
       <div className="todos">
-        {todoItems}
+        {this.props.todos
+          ? this
+            .props
+            .todos
+            .map((todo, index) => {
+              return (<TodoItems
+                onEdit={(edit) => this.editTodo(edit, index)}
+                id={index}
+                key={todo}
+                todo={todo}/>);
+            })
+          : null
+}
       </div>
     );
   }
 
 }
+const maptoprops = ({todos}) => ({todos});
 
-export default Todo;
+const actions = store => ({
+  deleteTodo: (state, props) => {
+    return {
+      ...state,
+      todos: state
+        .todos
+        .filter((todo) => todo !== props)
+    }
+  },
+  editTodo: (state, props, indexing) => {
+    return {
+      ...state,
+      todos: state
+        .todos
+        .map((todo, index) => {
+          if (index === indexing) {
+            return props;
+          }
+          return todo
+        })
+    }
+  }
+});
+
+export default connect(maptoprops, actions)(Todo)

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import '../App.css';
 import '../modal.css';
+import {connect} from 'redux-zero/react';
 
 class TodoItem extends Component {
     //
@@ -27,26 +28,14 @@ class TodoItem extends Component {
 
     editTodo(e) {
         e.preventDefault();
-        console.log(this.state.value);
-
         this
             .props
             .onEdit(this.state.value);
         this.setState({modalOpened: false})
     }
 
-    //
-    deleteTodo(del) {
-        // console.log(del);
-        this
-            .props
-            .onDelete(del);
-    }
-
     handleChange(inpval) {
         this.setState({value: inpval});
-
-        console.log(this.state);
     }
 
     openTodo(modal) {
@@ -66,8 +55,11 @@ class TodoItem extends Component {
             <div className="todo-div">
 
                 <li className="todoItem todo-list" onClick={this.modalToggle}>
-                    {this.props.todo}
-                    <a className="item-remove" onClick={() => this.deleteTodo(this.props.todo)}>
+
+                <p>    {this.props.todo}</p>
+                    <a
+                        className="item-remove"
+                        onClick={() => this.props.deleteTodo(this.props.todo)}>
                         x
                     </a>
                 </li>
@@ -96,4 +88,17 @@ class TodoItem extends Component {
 
 }
 
-export default TodoItem;
+const maptoprops = ({todos}) => ({todos});
+
+const actions = store => ({
+    deleteTodo: (state, props) => {
+        return {
+            ...state,
+            todos: state
+                .todos
+                .filter((todo) => todo !== props)
+        }
+    }
+});
+
+export default connect(maptoprops, actions)(TodoItem)

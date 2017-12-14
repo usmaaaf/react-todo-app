@@ -18,7 +18,7 @@ class TodoApp extends Component {
             value={this.state.text}
           />
           <button>
-            Add #{this.state.items.length + 1}
+            Add 
           </button>
         </form>
       </div>
@@ -50,7 +50,7 @@ class TodoList extends Component {
     return (
       <ul>
         {this.props.items.map(item => (
-          <li key={item.id} onClick={()=> console.log("Clicked Item ", item.id, " name " , item.text)}>{item.text}</li>
+          <li key={item.id}>{item.text}</li>
         ))}
       </ul>
     );

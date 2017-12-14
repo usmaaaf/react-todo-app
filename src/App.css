@@ -7,6 +7,11 @@
   display: flex;
 }
 
+.todo-div{
+  border: 1px solid #7f4cc1;
+  margin: 2px;
+}
+
 label{
   margin-right: 10px;
 }
@@ -15,24 +20,22 @@ label{
   border-bottom: 1px dashed #bbb;
   margin: 6px 0px;
 }
-
-.todo-div a {
-  display: inline;
+.todoItem{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }
+
 
 .todo-item:hover{
   background: #eee;
 }
 
-.item-name{
-  flex-basis: 0;
-  flex-grow: 9;
-}
+
 
 .item-remove{
-  flex-basis: 0;
-  flex-grow: 1;
-  text-align: right;
+  
+  margin: auto 0;
   color: #7f4cc1;
   font-weight: bold;
   cursor: pointer;
@@ -61,7 +64,6 @@ body{
 
 .todo-list {
   list-style-type: none;
-  padding: 0;
 }
 
 .App {
