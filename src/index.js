@@ -1,14 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+
 import registerServiceWorker from './registerServiceWorker';
 import { Provider } from 'redux-zero/react';
 import store from './Redux/store'
+import { Routers } from './router';
 
 const Apps = () => (
     <Provider store={store}>
-      <App />
+      <Routers />
     </Provider>
   );
 

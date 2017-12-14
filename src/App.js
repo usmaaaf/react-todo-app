@@ -4,7 +4,7 @@ import Todo from './Components/Todo';
 import AddTodo from './Components/AddTodo';
 
 
-class App extends Component {
+export class App extends Component {
 
   openModal(item) {
     this.setState({
@@ -30,4 +30,3 @@ class App extends Component {
 }
 
 
-export default App

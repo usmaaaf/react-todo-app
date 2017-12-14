@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import '../App.css';
 import '../modal.css';
 import {connect} from 'redux-zero/react';
+import axios from 'axios';
 
 class TodoItem extends Component {
     //
@@ -30,7 +31,7 @@ class TodoItem extends Component {
         e.preventDefault();
         this
             .props
-            .onEdit(this.state.value);
+            .editTodo({text: this.state.value, id: this.props.id});
         this.setState({modalOpened: false})
     }
 
@@ -98,7 +99,23 @@ const actions = store => ({
                 .todos
                 .filter((todo) => todo !== props)
         }
-    }
+    },
+    editTodo: async(state, props) => {
+        const { id, text } = props
+        const request = await axios.put(`https://express-todoapi.herokuapp.com/api/v1/todo/${id}` , {text});
+        console.log(id, text, request, props);
+        return {
+          ...state,
+          todos: state
+            .todos
+            .map((todo) => {
+              if (todo.id === id) {
+                return request.data.data.text;
+              }
+              return todo
+            })
+        }
+      }
 });
 
 export default connect(maptoprops, actions)(TodoItem)

@@ -10,14 +10,9 @@ class Todo extends Component {
       .onOpen(modal);
   }
 
-  editTodo(edit, indent) {
-    this
-      .props
-      .editTodo(edit, indent);
-  }
+
 
   render() {
-    console.log(this.props.todos);
     return (
       <div className="todos">
         {this.props.todos
@@ -26,10 +21,9 @@ class Todo extends Component {
             .todos
             .map((todo, index) => {
               return (<TodoItems
-                onEdit={(edit) => this.editTodo(edit, index)}
-                id={index}
-                key={todo}
-                todo={todo}/>);
+                id={todo._id}
+                key={todo._id}
+                todo={todo.text}/>);
             })
           : null
 }
@@ -47,19 +41,6 @@ const actions = store => ({
       todos: state
         .todos
         .filter((todo) => todo !== props)
-    }
-  },
-  editTodo: (state, props, indexing) => {
-    return {
-      ...state,
-      todos: state
-        .todos
-        .map((todo, index) => {
-          if (index === indexing) {
-            return props;
-          }
-          return todo
-        })
     }
   }
 });

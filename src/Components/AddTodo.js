@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 
 import { connect } from 'redux-zero/react';
+import axios from 'axios';
 
 class AddTodo extends Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        this.props.addTodo(this.refs.title.value);
+        this.props.addTodo({text: this.refs.title.value});
     }
 
     render() {
@@ -28,9 +29,12 @@ class AddTodo extends Component {
 const maptoprops = ({ todos }) => ({ todos });
 
 const actions = store => ({
-  addTodo: (state, props) => { return { 
+  addTodo: async(state, props) => {
+      const request = await axios.post("https://express-todoapi.herokuapp.com/api/v1/todo", props);
+  console.log(request)
+  return { 
     ...state,
-    todos: state.todos.concat(props)
+    todos: state.todos.concat(request.data.data)
 }}
 });
 
