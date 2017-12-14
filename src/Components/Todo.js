@@ -41,8 +41,8 @@ const maptoprops = ({todos}) => ({todos});
 const actions = store => ({
 getTodos: async(state) => {
               const request =  await axios.get("https://express-todoapi.herokuapp.com/api/v1/todo/")
-              console.log(request.data)
-              if(request.data.length > 1){
+              
+              if(request.data.success){
                 return{
                   ...state,
                   todos: state.todos.concat(request.data.data)

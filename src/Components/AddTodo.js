@@ -11,7 +11,7 @@ class AddTodo extends Component {
     }
 
     render() {
-        console.log(this.props.todos);
+        
         return (
             <div >
                 <h3>Add Todo</h3>
