@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import TodoItems from './TodoItem';
 import {connect} from 'redux-zero/react';
+import axios from 'axios';
 
 class Todo extends Component {
 
@@ -8,6 +9,9 @@ class Todo extends Component {
     this
       .props
       .onOpen(modal);
+  }
+  componentDidMount(){
+    this.props.getTodos();
   }
 
 
@@ -35,14 +39,17 @@ class Todo extends Component {
 const maptoprops = ({todos}) => ({todos});
 
 const actions = store => ({
-  deleteTodo: (state, props) => {
-    return {
-      ...state,
-      todos: state
-        .todos
-        .filter((todo) => todo !== props)
-    }
-  }
+getTodos: async(state) => {
+              const request =  await axios.get("https://express-todoapi.herokuapp.com/api/v1/todo/")
+              console.log(request.data)
+              if(request.data.length > 1){
+                return{
+                  ...state,
+                  todos: state.todos.concat(request.data.data)
+                }
+              }
+              
+            }
 });
 
 export default connect(maptoprops, actions)(Todo)

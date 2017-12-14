@@ -2,8 +2,9 @@ import React, {Component} from 'react';
 import axios from 'axios';
 
 import { connect } from 'redux-zero/react';
+import {Link} from 'react-router-dom';
 
-class Logins extends Component {
+class Register extends Component {
 
     constructor() {
         super();
@@ -21,7 +22,7 @@ class Logins extends Component {
     }
     userMatch(e) {
         e.preventDefault();
-        this.props.login({
+        this.props.register({
             email: this.refs.email.value,
             password: this.refs.pass.value
         }, this.props.history)
@@ -52,6 +53,7 @@ class Logins extends Component {
                         <input type="submit" value="submit"/>
 
                 </form>
+                <Link to="/login">Already have an account?</Link>
             </div>
         );
     }
@@ -59,8 +61,8 @@ class Logins extends Component {
 const maptoprops = ({ error, user }) => ({ error,user });
 
 const actions = store => ({
-    login: async(state, props, history) => { 
-        const request = await axios.post("https://express-todoapi.herokuapp.com/api/v1/login", props);
+    register: async(state, props, history) => { 
+        const request = await axios.post("https://express-todoapi.herokuapp.com/api/v1/register", props);
         if(request.data.success){
             history.push("/App");
             return { 
@@ -71,4 +73,4 @@ const actions = store => ({
         }
   });
 
-export let Login = connect(maptoprops, actions)(Logins)
+export let Registers = connect(maptoprops, actions)(Register)

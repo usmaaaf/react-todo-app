@@ -55,12 +55,12 @@ class TodoItem extends Component {
         return (
             <div className="todo-div">
 
-                <li className="todoItem todo-list" onClick={this.modalToggle}>
+                <li className="todoItem todo-list" >
 
-                <p>    {this.props.todo}</p>
+                <p onClick={this.modalToggle}>    {this.props.todo}</p>
                     <a
                         className="item-remove"
-                        onClick={() => this.props.deleteTodo(this.props.todo)}>
+                        onClick={() => this.props.deleteTodo({text: this.props.todo, id: this.props.id})}>
                         x
                     </a>
                 </li>
@@ -92,18 +92,20 @@ class TodoItem extends Component {
 const maptoprops = ({todos}) => ({todos});
 
 const actions = store => ({
-    deleteTodo: (state, props) => {
+    deleteTodo: async (state, props) => { 
+        const { id, text } = props
+        const request = await axios.delete(`https://express-todoapi.herokuapp.com/api/v1/todo/${id}` );
+        console.log(request)
         return {
             ...state,
             todos: state
                 .todos
-                .filter((todo) => todo !== props)
+                .filter((todo) => todo._id !== request.data.data._id)
         }
     },
     editTodo: async(state, props) => {
         const { id, text } = props
         const request = await axios.put(`https://express-todoapi.herokuapp.com/api/v1/todo/${id}` , {text});
-        console.log(id, text, request, props);
         return {
           ...state,
           todos: state
