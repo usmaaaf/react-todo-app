@@ -93,7 +93,7 @@ const maptoprops = ({todos}) => ({todos});
 
 const actions = store => ({
     deleteTodo: async (state, props) => { 
-        const { id, text } = props
+        const { id } = props
         const request = await axios.delete(`https://express-todoapi.herokuapp.com/api/v1/todo/${id}` );
         
         return {

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import axios from 'axios';
 
 import { connect } from 'redux-zero/react';
+import Nav from 'rea'
 
 class Logins extends Component {
 
@@ -43,7 +44,6 @@ class Logins extends Component {
                         onChange={(event) => this.handleOnChange(event)}/>
 
                     <input
-                        type="text"
                         ref="pass"
                         type="password"
                         placeholder="pass"
@@ -60,6 +60,7 @@ const maptoprops = ({ error, user }) => ({ error,user });
 const actions = store => ({
     login: async(state, props, history) => { 
         const request = await axios.post("https://express-todoapi.herokuapp.com/api/v1/login", props);
+        
         if(request.data.success){
             history.push("/App");
             return { 

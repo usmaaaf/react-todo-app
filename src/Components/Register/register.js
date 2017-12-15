@@ -42,7 +42,6 @@ class Register extends Component {
                         onChange={(event) => this.handleOnChange(event)}/>
 
                     <input
-                        type="text"
                         ref="pass"
                         type="password"
                         placeholder="pass"
